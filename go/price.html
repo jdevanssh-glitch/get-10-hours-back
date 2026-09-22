@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Redirecting…</title>
+  <meta http-equiv="refresh" content="0;url=../index.html?src=price" />
+  <script>
+    (function () {
+      var KEY = "g10_hit_price";
+      try {
+        if (!sessionStorage.getItem(KEY)) {
+          sessionStorage.setItem(KEY, String(Date.now()));
+          fetch("https://abacus.jasoncameron.dev/hit/get10hoursback/price", { mode: "cors" }).catch(function () {});
+        }
+      } catch (e) {}
+      location.replace("../index.html?src=price");
+    })();
+  </script>
+</head>
+<body>
+  <p>Taking you to Get 10 Hours Back… <a href="../index.html?src=price">Continue</a></p>
+</body>
+</html>

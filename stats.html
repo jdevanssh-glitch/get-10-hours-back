@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex" />
+  <title>Visit stats — Get 10 Hours Back</title>
+  <link rel="icon" href="logo.jpg" type="image/jpeg" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root { --bg:#0c0c0c; --card:#1a1a1a; --border:#2a2a2a; --text:#f4f1ea; --muted:#a39e94; --orange:#f5a623; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "DM Sans", system-ui, sans-serif; background: var(--bg); color: var(--text); padding: 2rem 1rem 4rem; }
+    .wrap { max-width: 720px; margin: 0 auto; }
+    h1 { font-size: 1.75rem; margin: 0 0 0.5rem; }
+    p { color: var(--muted); }
+    .grid { display: grid; gap: 1rem; margin: 2rem 0; }
+    @media (min-width: 640px) { .grid { grid-template-columns: 1fr 1fr; } }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.35rem; }
+    .card h2 { margin: 0 0 0.35rem; font-size: 1rem; color: var(--muted); font-weight: 600; }
+    .count { font-size: 2.5rem; font-weight: 700; color: var(--orange); letter-spacing: -0.03em; }
+    .link { font-size: 0.85rem; word-break: break-all; color: var(--muted); margin-top: 0.75rem; }
+    .link a { color: var(--orange); }
+    .total { grid-column: 1 / -1; }
+    button { background: var(--orange); color: #14110a; border: 0; border-radius: 999px; padding: 0.7rem 1.25rem; font-weight: 700; font-family: inherit; cursor: pointer; }
+    .note { font-size: 0.85rem; margin-top: 1.5rem; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Story link visits</h1>
+    <p>Unique browser sessions that opened each tracked link (refreshes in the same session do not count twice).</p>
+    <div class="grid" id="stats-grid">
+      <div class="card" data-key="leak">
+        <h2>Story · 10-hour tax</h2>
+        <div class="count" id="c-leak">…</div>
+        <p class="link"><a href="go/leak.html">/go/leak</a></p>
+      </div>
+      <div class="card" data-key="price">
+        <h2>Story · Early bird ₹249</h2>
+        <div class="count" id="c-price">…</div>
+        <p class="link"><a href="go/price.html">/go/price</a></p>
+      </div>
+      <div class="card" data-key="sunday">
+        <h2>Story · Sunday teaser</h2>
+        <div class="count" id="c-sunday">…</div>
+        <p class="link"><a href="go/sunday.html">/go/sunday</a></p>
+      </div>
+      <div class="card total" data-key="direct">
+        <h2>Direct / other</h2>
+        <div class="count" id="c-direct">…</div>
+      </div>
+    </div>
+    <button type="button" id="refresh">Refresh counts</button>
+    <p class="note">Share only the <code>/go/…</code> links on stories. Keep this <code>stats.html</code> page private (don’t post it).</p>
+    <p class="note"><a href="index.html" style="color:var(--orange)">← Back to site</a></p>
+  </div>
+  <script src="track.js"></script>
+  <script>
+    function render() {
+      if (!window.G10_fetchCounts) return;
+      window.G10_fetchCounts().then(function (rows) {
+        rows.forEach(function (row) {
+          var el = document.getElementById("c-" + row.key);
+          if (el) el.textContent = row.count;
+        });
+      });
+    }
+    document.getElementById("refresh").addEventListener("click", render);
+    render();
+  </script>
+</body>
+</html>
