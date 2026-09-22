@@ -532,6 +532,148 @@ ul, ol {
   margin: 0;
 }
 
+/* Videos */
+.video-grid {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+  .video-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.video-card {
+  margin: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.video-card video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  max-height: 420px;
+  object-fit: contain;
+  background: #000;
+}
+
+.video-card figcaption {
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+/* Sunday teaser join */
+.teaser-join {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 2rem 1.5rem;
+  box-shadow: var(--shadow);
+}
+
+.teaser-join .section-lede {
+  margin-bottom: 1.5rem;
+}
+
+.teaser-note {
+  margin: 1rem 0 0;
+  font-size: 0.9rem;
+  color: var(--text-dim);
+}
+
+/* Instructor */
+.instructor-grid {
+  display: grid;
+  gap: 2rem;
+  align-items: start;
+}
+
+@media (min-width: 880px) {
+  .instructor-grid {
+    grid-template-columns: 1.4fr 0.7fr;
+    gap: 3rem;
+  }
+}
+
+.instructor-copy p {
+  color: var(--text-muted);
+}
+
+.instructor-copy strong {
+  color: var(--text);
+}
+
+.instructor-points {
+  list-style: none;
+  display: grid;
+  gap: 0.65rem;
+  margin: 1.25rem 0 1.5rem;
+}
+
+.instructor-points li {
+  position: relative;
+  padding-left: 1.35rem;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.instructor-points li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.45rem;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: var(--orange);
+}
+
+.instructor-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.75rem 1.5rem;
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+
+.instructor-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 16px;
+  margin: 0 auto 1rem;
+  object-fit: cover;
+}
+
+.instructor-card h3 {
+  font-size: 1.35rem;
+  margin-bottom: 0.25rem;
+}
+
+.instructor-card > p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.instructor-tag {
+  display: inline-block;
+  margin-top: 1rem !important;
+  padding: 0.35rem 0.75rem;
+  background: var(--orange-soft);
+  color: var(--orange);
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
 /* Cover grid */
 .cover-grid {
   list-style: none;
