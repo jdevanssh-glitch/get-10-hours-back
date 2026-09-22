@@ -92,4 +92,51 @@
   // Guard: if someone bookmarks and checkout is closed, still show pay link
   // but label is clear above. Pay URL stays the same (Razorpay page).
   void PAY_URL;
+
+  // Marketing videos — slide & glide marquee
+  var track = document.getElementById("marquee-track");
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (track) {
+    if (!reduceMotion) {
+      track.innerHTML = track.innerHTML + track.innerHTML;
+    }
+
+    var videos = track.querySelectorAll("video[data-marketing]");
+
+    function playMuted(video) {
+      video.muted = true;
+      var playPromise = video.play();
+      if (playPromise && typeof playPromise.catch === "function") {
+        playPromise.catch(function () {});
+      }
+    }
+
+    videos.forEach(function (video) {
+      playMuted(video);
+
+      video.addEventListener("click", function () {
+        var card = video.closest(".video-card");
+        var wasUnmuted = !video.muted && !video.paused;
+
+        videos.forEach(function (other) {
+          other.controls = false;
+          other.muted = true;
+          var otherCard = other.closest(".video-card");
+          if (otherCard) otherCard.classList.remove("is-active");
+          if (other !== video) playMuted(other);
+        });
+
+        if (wasUnmuted) {
+          playMuted(video);
+          return;
+        }
+
+        video.muted = false;
+        video.controls = true;
+        if (card) card.classList.add("is-active");
+        video.play().catch(function () {});
+      });
+    });
+  }
 })();

@@ -532,21 +532,41 @@ ul, ol {
   margin: 0;
 }
 
-/* Videos */
-.video-grid {
-  display: grid;
-  gap: 1.25rem;
-  grid-template-columns: 1fr;
+/* Marketing videos — slide & glide marquee */
+.marquee {
+  overflow: hidden;
+  width: 100%;
+  mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
 }
 
-@media (min-width: 640px) {
-  .video-grid {
-    grid-template-columns: 1fr 1fr;
+.marquee-track {
+  display: flex;
+  width: max-content;
+  gap: 1rem;
+  padding: 0.25rem 1rem 0.5rem;
+  animation: glide 48s linear infinite;
+  will-change: transform;
+}
+
+.marquee:hover .marquee-track,
+.marquee:focus-within .marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes glide {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
   }
 }
 
 .video-card {
   margin: 0;
+  flex: 0 0 auto;
+  width: min(220px, 58vw);
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
@@ -556,17 +576,44 @@ ul, ol {
 .video-card video {
   display: block;
   width: 100%;
+  height: auto;
   aspect-ratio: 9 / 16;
-  max-height: 420px;
-  object-fit: contain;
+  object-fit: cover;
   background: #000;
+  cursor: pointer;
 }
 
 .video-card figcaption {
-  padding: 0.75rem 1rem;
-  font-size: 0.9rem;
+  padding: 0.65rem 0.85rem;
+  font-size: 0.8rem;
   font-weight: 600;
-  color: var(--text-muted);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.video-card.is-active {
+  border-color: var(--orange);
+}
+
+.video-card.is-active figcaption {
+  color: var(--orange);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: var(--max);
+    margin-inline: auto;
+    justify-content: center;
+  }
+
+  .marquee {
+    mask-image: none;
+    -webkit-mask-image: none;
+  }
 }
 
 /* Sunday teaser join */
