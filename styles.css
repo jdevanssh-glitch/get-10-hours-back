@@ -545,7 +545,8 @@ ul, ol {
   width: max-content;
   gap: 1rem;
   padding: 0.25rem 1rem 0.5rem;
-  animation: glide 48s linear infinite;
+  /* Glide left then back — one copy of each video only */
+  animation: glide 36s ease-in-out infinite alternate;
   will-change: transform;
 }
 
@@ -559,7 +560,7 @@ ul, ol {
     transform: translateX(0);
   }
   to {
-    transform: translateX(-50%);
+    transform: translateX(calc(-100% + 100vw - 2rem));
   }
 }
 
@@ -584,12 +585,11 @@ ul, ol {
 }
 
 .video-card figcaption {
-  padding: 0.65rem 0.85rem;
-  font-size: 0.8rem;
+  padding: 0.75rem 0.85rem;
+  font-size: 0.9rem;
   font-weight: 600;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-  color: var(--text-dim);
+  line-height: 1.3;
+  color: var(--text);
 }
 
 .video-card.is-active {

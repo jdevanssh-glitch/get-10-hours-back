@@ -93,16 +93,11 @@
   // but label is clear above. Pay URL stays the same (Razorpay page).
   void PAY_URL;
 
-  // Marketing videos — slide & glide marquee
+  // Preview videos — slide & glide (one copy each, no duplicate load)
   var track = document.getElementById("marquee-track");
-  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   if (track) {
-    if (!reduceMotion) {
-      track.innerHTML = track.innerHTML + track.innerHTML;
-    }
-
-    var videos = track.querySelectorAll("video[data-marketing]");
+    var videos = track.querySelectorAll("video[data-preview]");
 
     function playMuted(video) {
       video.muted = true;
