@@ -128,41 +128,54 @@
 
     <section id="videos" class="section section-alt">
       <div class="container">
-        <div class="section-head">
+        <div class="section-head center">
           <h2>See what you get on Sunday</h2>
-          <p>Real workflows from the class. Tap a clip to play (streams from YouTube — fast). Then book your seat.</p>
+          <p>Four short clips from the class. Pick one, hit play, then book your seat.</p>
         </div>
-      </div>
-      <div class="marquee" aria-label="Class preview videos">
-        <div class="marquee-track" id="marquee-track">
-          <figure class="video-card" data-youtube="7mjikS5bg1c">
-            <button type="button" class="yt-thumb" aria-label="Play: Stop typing the same reply">
-              <img src="https://i.ytimg.com/vi/7mjikS5bg1c/hqdefault.jpg" alt="" width="480" height="360" loading="lazy" />
-              <span class="yt-play" aria-hidden="true">▶</span>
+
+        <div class="player" id="class-player" data-index="0">
+          <div class="player-stage">
+            <div class="player-frame" id="player-frame">
+              <button type="button" class="player-poster" id="player-poster" aria-label="Play video">
+                <img id="player-poster-img" src="https://i.ytimg.com/vi/7mjikS5bg1c/hqdefault.jpg" alt="" width="720" height="1280" />
+                <span class="player-play" aria-hidden="true">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                </span>
+              </button>
+            </div>
+
+            <button type="button" class="player-nav player-prev" id="player-prev" aria-label="Previous clip">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
             </button>
-            <figcaption>Stop typing the same reply</figcaption>
-          </figure>
-          <figure class="video-card" data-youtube="hdPPKam-BFc">
-            <button type="button" class="yt-thumb" aria-label="Play: Batch Meta posts in one sitting">
-              <img src="https://i.ytimg.com/vi/hdPPKam-BFc/hqdefault.jpg" alt="" width="480" height="360" loading="lazy" />
-              <span class="yt-play" aria-hidden="true">▶</span>
+            <button type="button" class="player-nav player-next" id="player-next" aria-label="Next clip">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
             </button>
-            <figcaption>Batch Meta posts in one sitting</figcaption>
-          </figure>
-          <figure class="video-card" data-youtube="edmZnZoHR7I">
-            <button type="button" class="yt-thumb" aria-label="Play: LinkedIn — find people for your work">
-              <img src="https://i.ytimg.com/vi/edmZnZoHR7I/hqdefault.jpg" alt="" width="480" height="360" loading="lazy" />
-              <span class="yt-play" aria-hidden="true">▶</span>
+          </div>
+
+          <div class="player-meta">
+            <p class="player-count"><span id="player-pos">1</span> / 4</p>
+            <h3 id="player-title">Stop typing the same reply</h3>
+            <a class="player-yt" id="player-yt" href="https://youtube.com/shorts/7mjikS5bg1c" target="_blank" rel="noopener noreferrer">Open on YouTube ↗</a>
+          </div>
+
+          <div class="player-playlist" role="listbox" aria-label="Choose a clip" id="player-playlist">
+            <button type="button" class="playlist-item is-active" role="option" aria-selected="true" data-id="7mjikS5bg1c" data-title="Stop typing the same reply">
+              <img src="https://i.ytimg.com/vi/7mjikS5bg1c/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" />
+              <span>Stop typing the same reply</span>
             </button>
-            <figcaption>LinkedIn — find people for your work</figcaption>
-          </figure>
-          <figure class="video-card" data-youtube="sedQDUwcUuQ">
-            <button type="button" class="yt-thumb" aria-label="Play: Decks without a blank slide">
-              <img src="https://i.ytimg.com/vi/sedQDUwcUuQ/hqdefault.jpg" alt="" width="480" height="360" loading="lazy" />
-              <span class="yt-play" aria-hidden="true">▶</span>
+            <button type="button" class="playlist-item" role="option" aria-selected="false" data-id="hdPPKam-BFc" data-title="Batch Meta posts in one sitting">
+              <img src="https://i.ytimg.com/vi/hdPPKam-BFc/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" />
+              <span>Batch Meta posts in one sitting</span>
             </button>
-            <figcaption>Decks without a blank slide</figcaption>
-          </figure>
+            <button type="button" class="playlist-item" role="option" aria-selected="false" data-id="edmZnZoHR7I" data-title="LinkedIn — find people for your work">
+              <img src="https://i.ytimg.com/vi/edmZnZoHR7I/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" />
+              <span>LinkedIn — find people for your work</span>
+            </button>
+            <button type="button" class="playlist-item" role="option" aria-selected="false" data-id="sedQDUwcUuQ" data-title="Decks without a blank slide">
+              <img src="https://i.ytimg.com/vi/sedQDUwcUuQ/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" />
+              <span>Decks without a blank slide</span>
+            </button>
+          </div>
         </div>
       </div>
     </section>

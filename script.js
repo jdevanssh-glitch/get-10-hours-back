@@ -93,53 +93,113 @@
   // but label is clear above. Pay URL stays the same (Razorpay page).
   void PAY_URL;
 
-  // YouTube Shorts — thumbnail first, embed only on tap (fast page load)
-  var track = document.getElementById("marquee-track");
-  var marquee = document.querySelector(".marquee");
+  // Class preview player — one large stage + playlist
+  var player = document.getElementById("class-player");
+  if (player) {
+    var items = Array.prototype.slice.call(
+      player.querySelectorAll(".playlist-item")
+    );
+    var frame = document.getElementById("player-frame");
+    var poster = document.getElementById("player-poster");
+    var posterImg = document.getElementById("player-poster-img");
+    var titleEl = document.getElementById("player-title");
+    var posEl = document.getElementById("player-pos");
+    var ytLink = document.getElementById("player-yt");
+    var prevBtn = document.getElementById("player-prev");
+    var nextBtn = document.getElementById("player-next");
+    var index = 0;
+    var playing = false;
 
-  if (track) {
-    track.querySelectorAll(".video-card[data-youtube]").forEach(function (card) {
-      var btn = card.querySelector(".yt-thumb");
-      if (!btn) return;
+    function clipAt(i) {
+      var item = items[i];
+      return {
+        id: item.getAttribute("data-id"),
+        title: item.getAttribute("data-title") || item.textContent.trim(),
+      };
+    }
 
-      btn.addEventListener("click", function () {
-        var id = card.getAttribute("data-youtube");
-        if (!id) return;
+    function stopEmbed() {
+      var iframe = frame.querySelector("iframe");
+      if (iframe) iframe.remove();
+      poster.hidden = false;
+      playing = false;
+    }
 
-        track.querySelectorAll(".video-card.is-active").forEach(function (other) {
-          if (other === card) return;
-          other.classList.remove("is-active");
-          var iframe = other.querySelector("iframe");
-          var thumb = other.querySelector(".yt-thumb");
-          if (iframe) iframe.remove();
-          if (thumb) thumb.hidden = false;
-        });
+    function showClip(i, autoplay) {
+      if (i < 0) i = items.length - 1;
+      if (i >= items.length) i = 0;
+      index = i;
+      var clip = clipAt(index);
 
-        var existing = card.querySelector("iframe");
-        if (existing) {
-          existing.remove();
-          btn.hidden = false;
-          card.classList.remove("is-active");
-          if (marquee) marquee.classList.remove("is-playing");
-          return;
-        }
+      stopEmbed();
+      posterImg.src = "https://i.ytimg.com/vi/" + clip.id + "/hqdefault.jpg";
+      poster.setAttribute("aria-label", "Play: " + clip.title);
+      titleEl.textContent = clip.title;
+      posEl.textContent = String(index + 1);
+      ytLink.href = "https://youtube.com/shorts/" + clip.id;
+      player.setAttribute("data-index", String(index));
 
-        var iframe = document.createElement("iframe");
-        iframe.src =
-          "https://www.youtube-nocookie.com/embed/" +
-          id +
-          "?autoplay=1&playsinline=1&rel=0&modestbranding=1";
-        iframe.title = (card.querySelector("figcaption") || {}).textContent || "Class preview";
-        iframe.allow =
-          "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
-        iframe.allowFullscreen = true;
-        iframe.referrerPolicy = "strict-origin-when-cross-origin";
+      items.forEach(function (item, n) {
+        var on = n === index;
+        item.classList.toggle("is-active", on);
+        item.setAttribute("aria-selected", on ? "true" : "false");
+      });
 
-        btn.hidden = true;
-        card.insertBefore(iframe, card.querySelector("figcaption"));
-        card.classList.add("is-active");
-        if (marquee) marquee.classList.add("is-playing");
+      if (autoplay) startPlay();
+    }
+
+    function startPlay() {
+      var clip = clipAt(index);
+      stopEmbed();
+      poster.hidden = true;
+
+      var iframe = document.createElement("iframe");
+      iframe.src =
+        "https://www.youtube-nocookie.com/embed/" +
+        clip.id +
+        "?autoplay=1&playsinline=1&rel=0&modestbranding=1";
+      iframe.title = clip.title;
+      iframe.allow =
+        "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+      iframe.allowFullscreen = true;
+      iframe.referrerPolicy = "strict-origin-when-cross-origin";
+      frame.appendChild(iframe);
+      playing = true;
+    }
+
+    poster.addEventListener("click", function () {
+      startPlay();
+    });
+
+    prevBtn.addEventListener("click", function () {
+      showClip(index - 1, playing);
+    });
+
+    nextBtn.addEventListener("click", function () {
+      showClip(index + 1, playing);
+    });
+
+    items.forEach(function (item, n) {
+      item.addEventListener("click", function () {
+        showClip(n, true);
       });
     });
+
+    player.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        showClip(index - 1, playing);
+      } else if (e.key === "ArrowRight") {
+        e.preventDefault();
+        showClip(index + 1, playing);
+      } else if (e.key === " " || e.key === "Enter") {
+        if (document.activeElement === poster || document.activeElement === player) {
+          e.preventDefault();
+          if (!playing) startPlay();
+        }
+      }
+    });
+
+    showClip(0, false);
   }
 })();

@@ -532,130 +532,194 @@ ul, ol {
   margin: 0;
 }
 
-/* Marketing videos — slide & glide marquee */
-.marquee {
-  overflow: hidden;
-  width: 100%;
-  mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+/* Class video player */
+.player {
+  max-width: 420px;
+  margin: 0 auto;
 }
 
-.marquee-track {
-  display: flex;
-  width: max-content;
-  gap: 1rem;
-  padding: 0.25rem 1rem 0.5rem;
-  /* Glide left then back — one copy of each video only */
-  animation: glide 36s ease-in-out infinite alternate;
-  will-change: transform;
-}
-
-.marquee:hover .marquee-track,
-.marquee:focus-within .marquee-track {
-  animation-play-state: paused;
-}
-
-@keyframes glide {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(calc(-100% + 100vw - 2rem));
-  }
-}
-
-.video-card {
-  margin: 0;
-  flex: 0 0 auto;
-  width: min(220px, 58vw);
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  overflow: hidden;
-}
-
-.yt-thumb {
+.player-stage {
   position: relative;
-  display: block;
-  width: 100%;
+}
+
+.player-frame {
+  position: relative;
   aspect-ratio: 9 / 16;
-  padding: 0;
+  max-height: min(72vh, 680px);
+  margin-inline: auto;
+  background: #000;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.player-frame iframe,
+.player-poster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   border: 0;
+}
+
+.player-poster {
+  padding: 0;
   background: #000;
   cursor: pointer;
-  overflow: hidden;
+  display: block;
 }
 
-.yt-thumb img {
+.player-poster img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
 
-.yt-play {
+.player-play {
   position: absolute;
   inset: 50% auto auto 50%;
   transform: translate(-50%, -50%);
-  width: 3rem;
-  height: 3rem;
+  width: 4.25rem;
+  height: 4.25rem;
   border-radius: 50%;
-  background: rgba(245, 166, 35, 0.95);
+  background: var(--orange);
   color: #14110a;
   display: grid;
   place-items: center;
-  font-size: 0.95rem;
-  padding-left: 0.15rem;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+  transition: transform 0.15s ease-out, background 0.15s;
 }
 
-.yt-thumb:hover .yt-play,
-.yt-thumb:focus-visible .yt-play {
+.player-poster:hover .player-play,
+.player-poster:focus-visible .player-play {
   background: var(--orange-hover);
+  transform: translate(-50%, -50%) scale(1.05);
 }
 
-.video-card iframe {
-  display: block;
-  width: 100%;
-  aspect-ratio: 9 / 16;
-  border: 0;
-  background: #000;
+.player-poster:active .player-play {
+  transform: translate(-50%, -50%) scale(0.97);
 }
 
-.video-card figcaption {
-  padding: 0.75rem 0.85rem;
-  font-size: 0.9rem;
-  font-weight: 600;
-  line-height: 1.3;
+.player-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: rgba(20, 20, 20, 0.88);
   color: var(--text);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: background 0.15s, border-color 0.15s, transform 0.15s;
 }
 
-.video-card.is-active {
+.player-nav:hover,
+.player-nav:focus-visible {
   border-color: var(--orange);
-}
-
-.video-card.is-active figcaption {
   color: var(--orange);
 }
 
-.marquee.is-playing .marquee-track {
-  animation-play-state: paused;
+.player-nav:active {
+  transform: translateY(-50%) scale(0.97);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .marquee-track {
-    animation: none;
-    flex-wrap: wrap;
-    width: 100%;
-    max-width: var(--max);
-    margin-inline: auto;
-    justify-content: center;
-  }
+.player-prev { left: -0.35rem; }
+.player-next { right: -0.35rem; }
 
-  .marquee {
-    mask-image: none;
-    -webkit-mask-image: none;
+@media (min-width: 520px) {
+  .player-prev { left: -3rem; }
+  .player-next { right: -3rem; }
+}
+
+.player-meta {
+  text-align: center;
+  margin-top: 1.25rem;
+}
+
+.player-count {
+  margin: 0 0 0.35rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--orange);
+}
+
+.player-meta h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.2rem;
+}
+
+.player-yt {
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.player-yt:hover {
+  text-decoration: underline;
+}
+
+.player-playlist {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.65rem;
+  margin-top: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .player-playlist {
+    grid-template-columns: repeat(4, 1fr);
   }
+}
+
+.playlist-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  padding: 0.4rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-card);
+  color: var(--text-muted);
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.3;
+  transition: border-color 0.15s, color 0.15s, transform 0.15s;
+}
+
+.playlist-item img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 4px;
+  background: #000;
+}
+
+.playlist-item:hover,
+.playlist-item:focus-visible {
+  border-color: var(--text-dim);
+  color: var(--text);
+}
+
+.playlist-item:active {
+  transform: scale(0.98);
+}
+
+.playlist-item.is-active {
+  border-color: var(--orange);
+  color: var(--text);
+  box-shadow: 0 0 0 1px rgba(245, 166, 35, 0.35);
 }
 
 /* Track badge */
