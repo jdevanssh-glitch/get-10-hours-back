@@ -42,6 +42,12 @@
   }
 
   var src = getSource();
+  var LABELS = {
+    leak: "10-hour tax story",
+    price: "Early bird ₹249 story",
+    sunday: "Sunday teaser story",
+    direct: "Direct / other",
+  };
   window.G10_TRACK_SRC = src;
 
   if (src !== "direct") {
@@ -56,6 +62,20 @@
       el.textContent = "Via: " + src;
     }
   });
+
+  // Google Analytics — marketing template / campaign source
+  if (typeof window.G10_gaEvent === "function") {
+    window.G10_gaEvent("page_view_source", {
+      source: src,
+      source_label: LABELS[src] || src,
+    });
+    if (src !== "direct") {
+      window.G10_gaEvent("story_visit", {
+        story_id: src,
+        story_name: LABELS[src] || src,
+      });
+    }
+  }
 
   window.G10_fetchCounts = function () {
     return Promise.all(

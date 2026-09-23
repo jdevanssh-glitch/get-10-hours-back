@@ -3,7 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <title>Redirecting…</title>
-  <meta http-equiv="refresh" content="0;url=../index.html?src=price" />
+  <meta http-equiv="refresh" content="1;url=../index.html?src=price" />
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-GSYMVKM8E5"></script>
+  <script src="../ga.js"></script>
   <script>
     (function () {
       var KEY = "g10_hit_price";
@@ -13,7 +16,16 @@
           fetch("https://abacus.jasoncameron.dev/hit/get10hoursback/price", { mode: "cors" }).catch(function () {});
         }
       } catch (e) {}
-      location.replace("../index.html?src=price");
+      if (typeof G10_gaEvent === "function") {
+        G10_gaEvent("story_click", {
+          story_id: "price",
+          story_name: "Early bird ₹249 story",
+          transport_type: "beacon",
+        });
+      }
+      setTimeout(function () {
+        location.replace("../index.html?src=price");
+      }, 200);
     })();
   </script>
 </head>

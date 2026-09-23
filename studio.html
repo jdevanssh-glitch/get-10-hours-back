@@ -7,6 +7,9 @@
   <title>Studio — Get 10 Hours Back</title>
   <link rel="icon" href="logo.jpg" type="image/jpeg" />
   <link rel="stylesheet" href="styles.css" />
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-GSYMVKM8E5"></script>
+  <script src="ga.js"></script>
   <style>
     .gate {
       min-height: 100vh;
@@ -139,7 +142,30 @@
         </div>
       </div>
 
-      <h2>Story templates</h2>
+      <h2>Marketing templates — how to use</h2>
+      <div class="stats-grid" style="margin:1.25rem 0 2rem">
+        <div class="stat-card">
+          <h3>1 · 10-hour tax</h3>
+          <p style="margin:0;color:var(--text-muted);font-size:0.95rem">Use first. Hook for founders/owners still doing WhatsApp + mail by hand. Post PNG + put tracked link in story sticker.</p>
+          <p style="margin:0.75rem 0 0;font-size:0.8rem;color:var(--text-dim)">GA event: <code>story_click</code> · id <code>leak</code></p>
+        </div>
+        <div class="stat-card">
+          <h3>2 · Early bird ₹249</h3>
+          <p style="margin:0;color:var(--text-muted);font-size:0.95rem">Use for price urgency until Tue 30 Sep, 10:00 pm. First 15 seats. Then switch copy to ₹349.</p>
+          <p style="margin:0.75rem 0 0;font-size:0.8rem;color:var(--text-dim)">GA event: <code>story_click</code> · id <code>price</code></p>
+        </div>
+        <div class="stat-card">
+          <h3>3 · Sunday teaser</h3>
+          <p style="margin:0;color:var(--text-muted);font-size:0.95rem">Use for free teaser Sun 27 Sep, 8:30–8:50 pm. Push people to WhatsApp group after they land.</p>
+          <p style="margin:0.75rem 0 0;font-size:0.8rem;color:var(--text-dim)">GA event: <code>story_click</code> · id <code>sunday</code></p>
+        </div>
+        <div class="stat-card wide">
+          <h3>Google Analytics</h3>
+          <p style="margin:0;color:var(--text-muted);font-size:0.95rem">Property <code>G-GSYMVKM8E5</code> is on the public site, studio, and all <code>/go/…</code> links. In GA4 look for events <code>story_click</code> and <code>story_visit</code>, and parameter <code>story_id</code> = leak / price / sunday.</p>
+        </div>
+      </div>
+
+      <h2>Story templates — download</h2>
       <p style="color:var(--text-muted);max-width:36rem">Download the PNG for WhatsApp / Instagram stories. Share only the tracked link (or the QR on the image).</p>
       <div class="share-grid" style="margin-top:1.25rem">
         <article class="share-card">
@@ -169,7 +195,7 @@
       </div>
 
       <h2>Visit tracking</h2>
-      <p style="color:var(--text-muted)">Counts unique browser sessions per tracked link. Same session refresh does not count twice.</p>
+      <p style="color:var(--text-muted)">Studio counts + Google Analytics. Unique browser sessions per tracked link (same session refresh does not count twice here).</p>
       <div class="stats-grid" id="stats-grid">
         <div class="stat-card">
           <h3>10-hour tax</h3>

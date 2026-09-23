@@ -3,7 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <title>Redirecting…</title>
-  <meta http-equiv="refresh" content="0;url=../index.html?src=sunday" />
+  <meta http-equiv="refresh" content="1;url=../index.html?src=sunday" />
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-GSYMVKM8E5"></script>
+  <script src="../ga.js"></script>
   <script>
     (function () {
       var KEY = "g10_hit_sunday";
@@ -13,7 +16,16 @@
           fetch("https://abacus.jasoncameron.dev/hit/get10hoursback/sunday", { mode: "cors" }).catch(function () {});
         }
       } catch (e) {}
-      location.replace("../index.html?src=sunday");
+      if (typeof G10_gaEvent === "function") {
+        G10_gaEvent("story_click", {
+          story_id: "sunday",
+          story_name: "Sunday teaser story",
+          transport_type: "beacon",
+        });
+      }
+      setTimeout(function () {
+        location.replace("../index.html?src=sunday");
+      }, 200);
     })();
   </script>
 </head>
