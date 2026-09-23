@@ -93,44 +93,52 @@
   // but label is clear above. Pay URL stays the same (Razorpay page).
   void PAY_URL;
 
-  // Preview videos — slide & glide (one copy each, no duplicate load)
+  // YouTube Shorts — thumbnail first, embed only on tap (fast page load)
   var track = document.getElementById("marquee-track");
+  var marquee = document.querySelector(".marquee");
 
   if (track) {
-    var videos = track.querySelectorAll("video[data-preview]");
+    track.querySelectorAll(".video-card[data-youtube]").forEach(function (card) {
+      var btn = card.querySelector(".yt-thumb");
+      if (!btn) return;
 
-    function playMuted(video) {
-      video.muted = true;
-      var playPromise = video.play();
-      if (playPromise && typeof playPromise.catch === "function") {
-        playPromise.catch(function () {});
-      }
-    }
+      btn.addEventListener("click", function () {
+        var id = card.getAttribute("data-youtube");
+        if (!id) return;
 
-    videos.forEach(function (video) {
-      playMuted(video);
-
-      video.addEventListener("click", function () {
-        var card = video.closest(".video-card");
-        var wasUnmuted = !video.muted && !video.paused;
-
-        videos.forEach(function (other) {
-          other.controls = false;
-          other.muted = true;
-          var otherCard = other.closest(".video-card");
-          if (otherCard) otherCard.classList.remove("is-active");
-          if (other !== video) playMuted(other);
+        track.querySelectorAll(".video-card.is-active").forEach(function (other) {
+          if (other === card) return;
+          other.classList.remove("is-active");
+          var iframe = other.querySelector("iframe");
+          var thumb = other.querySelector(".yt-thumb");
+          if (iframe) iframe.remove();
+          if (thumb) thumb.hidden = false;
         });
 
-        if (wasUnmuted) {
-          playMuted(video);
+        var existing = card.querySelector("iframe");
+        if (existing) {
+          existing.remove();
+          btn.hidden = false;
+          card.classList.remove("is-active");
+          if (marquee) marquee.classList.remove("is-playing");
           return;
         }
 
-        video.muted = false;
-        video.controls = true;
-        if (card) card.classList.add("is-active");
-        video.play().catch(function () {});
+        var iframe = document.createElement("iframe");
+        iframe.src =
+          "https://www.youtube-nocookie.com/embed/" +
+          id +
+          "?autoplay=1&playsinline=1&rel=0&modestbranding=1";
+        iframe.title = (card.querySelector("figcaption") || {}).textContent || "Class preview";
+        iframe.allow =
+          "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+        iframe.allowFullscreen = true;
+        iframe.referrerPolicy = "strict-origin-when-cross-origin";
+
+        btn.hidden = true;
+        card.insertBefore(iframe, card.querySelector("figcaption"));
+        card.classList.add("is-active");
+        if (marquee) marquee.classList.add("is-playing");
       });
     });
   }
